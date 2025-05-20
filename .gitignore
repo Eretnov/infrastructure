@@ -1,0 +1,12 @@
+# Игнорировать папку .terraform и всё её содержимое
+terraform/.terraform/
+
+# Игнорировать файл .terraform.lock.hcl в папке terraform
+terraform/.terraform.lock.hcltest
+
+# Игнорировать файлы состояний
+*.tfstate
+*.tfstate.backup
+*.tfvars
+*.tfplan
+*.tfapply
