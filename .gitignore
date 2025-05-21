@@ -2,7 +2,7 @@
 terraform/.terraform/
 
 # Игнорировать файл .terraform.lock.hcl в папке terraform
-terraform/.terraform.lock.hcltest
+terraform/.terraform.lock.hcl
 
 # Игнорировать файлы состояний
 *.tfstate
