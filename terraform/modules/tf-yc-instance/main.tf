@@ -3,7 +3,7 @@ resource "yandex_compute_instance" "vm-1" {
   platform_id = var.platform_id
 
   scheduling_policy {
-    preemptible = false
+    preemptible = var.preemptible != null ? var.preemptible : false
   }
 
   resources {
@@ -24,7 +24,7 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   metadata = {
-    user-data = templatefile("~/infrastructure/terraform/cloud-init.yaml.tmpl", {
+    user-data = templatefile("cloud-init.yaml.tmpl", {
       ssh_key = var.ssh_key
     })
   }

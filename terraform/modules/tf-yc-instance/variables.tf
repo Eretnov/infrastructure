@@ -28,3 +28,8 @@ variable "image_id" {
 variable "subnet_id" {
   type        = string
 }
+
+variable "preemptible" {
+  type        = bool
+  default     = null
+}
