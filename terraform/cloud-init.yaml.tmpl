@@ -1,0 +1,15 @@
+#cloud-config
+users:
+  - default
+  - name: student
+    groups: users
+    shell: /bin/bash
+    sudo: "ALL=(ALL) NOPASSWD:ALL"
+    ssh_authorized_keys:
+      - ${ssh_key}
+  - name: ansible
+    groups: users
+    sudo: "ALL=(ALL) NOPASSWD:ALL"
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ${ssh_key}
