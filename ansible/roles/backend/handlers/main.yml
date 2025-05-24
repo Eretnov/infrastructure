@@ -1,3 +1,8 @@
 - name: Reload systemd
   systemd:
     daemon_reload: yes
+
+- name: Restart backend
+  systemd:
+    name: backend
+    state: restarted

@@ -43,9 +43,11 @@
     mode: '0644'
   notify:
     - Reload systemd
+    - Restart backend
 
 - name: Ensure backend service is started and enabled
   ansible.builtin.systemd:
     name: backend
     state: started
     enabled: yes
+

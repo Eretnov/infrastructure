@@ -1,4 +1,5 @@
-nexus_frontend_url: "https://nexus.praktikum-services.tech/repository/std-040-31-frontend-raw/{{ artifact_version }}/sausage-store-{{ artifact_version }}.tar.gz"
+nexus_frontend_url: "https://nexus.praktikum-services.tech/repository/{{ repository }}/{{ artifact_version }}/sausage-store-{{ artifact_version }}.tar.gz"
 artifact_version: "1.0.2062494"
 web_owner: www-data
 web_group: www-data
+repository: "std-040-31-frontend-raw"

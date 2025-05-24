@@ -37,9 +37,13 @@
     mode: '0644'
 
 - name: Unpack artifact to web dir
-  ansible.builtin.shell: |
-    tar -xzf /var/www-data/sausage-store-{{ artifact_version }}.tar.gz -C /var/www-data/
-    chown -R {{ web_owner }}:{{ web_group }} /var/www-data/
+  ansible.builtin.unarchive:
+    src: /var/www-data/sausage-store-{{ artifact_version }}.tar.gz
+    dest: /var/www-data/
+    remote_src: true
+    owner: "{{ web_owner }}"
+    group: "{{ web_group }}"
+    mode: "0755"
   notify: Reload nginx
 
 - name: Remove archive after extracting
