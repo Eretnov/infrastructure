@@ -1,0 +1,10 @@
+---
+- name: Deploy backend and frontend roles
+  become: true
+  hosts: all
+  gather_facts: false
+  remote_user: ansible
+
+  roles:
+    - backend
+    - frontend
