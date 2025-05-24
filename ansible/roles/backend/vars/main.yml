@@ -1,0 +1,3 @@
+nexus_backend_url: "https://nexus.praktikum-services.tech/repository/std-040-31-backend-mixed/com/yandex/practicum/devops/sausage-store/1.0.2062495/sausage-store-1.0.2062495.jar"
+backend_user: backend
+backend_group: backend

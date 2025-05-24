@@ -1,0 +1,51 @@
+---
+- name: Load vault secrets
+  include_vars: vault.yml
+
+- name: Install OpenJDK 16
+  ansible.builtin.apt:
+    name: openjdk-16-jdk
+    state: present
+    update_cache: yes
+
+- name: Create service user
+  ansible.builtin.user:
+    name: "{{ backend_user }}"
+    system: yes
+    shell: /usr/sbin/nologin
+    create_home: no
+
+- name: Create backend directory
+  ansible.builtin.file:
+    path: /opt/sausage-store/bin
+    state: directory
+    owner: "{{ backend_user }}"
+    group: "{{ backend_group }}"
+    mode: '0755'
+
+- name: Download backend artifact from Nexus
+  ansible.builtin.get_url:
+    url: "{{ nexus_backend_url }}"
+    dest: /opt/sausage-store/bin/sausage-store.jar
+    owner: "{{ backend_user }}"
+    group: "{{ backend_group }}"
+    mode: '0644'
+    url_username: "{{ nexus_user }}"
+    url_password: "{{ nexus_pass }}"
+    force_basic_auth: yes
+
+- name: Create systemd unit file for backend
+  ansible.builtin.template:
+    src: backend.service.j2
+    dest: /etc/systemd/system/backend.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Reload systemd
+
+- name: Ensure backend service is started and enabled
+  ansible.builtin.systemd:
+    name: backend
+    state: started
+    enabled: yes

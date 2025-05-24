@@ -1,0 +1,48 @@
+---
+- name: Install packages present
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+    - nodejs
+    - npm
+    - nginx
+
+- name: Create dir for www-data
+  ansible.builtin.file:
+    path: "/var/www-data"
+    state: directory
+    owner: "{{ web_owner }}"
+    group: "{{ web_group }}"
+    mode: '0755'
+
+- name: Deploy nginx config from template
+  ansible.builtin.template:
+    src: default.j2
+    dest: /etc/nginx/sites-available/default
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Download artifact from Nexus
+  ansible.builtin.get_url:
+    url: "{{ nexus_frontend_url }}"
+    dest: "/var/www-data/sausage-store-{{ artifact_version }}.tar.gz"
+    url_username: "{{ nexus_user }}"
+    url_password: "{{ nexus_pass }}"
+    force_basic_auth: yes
+    owner: "{{ web_owner }}"
+    group: "{{ web_group }}"
+    mode: '0644'
+
+- name: Unpack artifact to web dir
+  ansible.builtin.shell: |
+    tar -xzf /var/www-data/sausage-store-{{ artifact_version }}.tar.gz -C /var/www-data/
+    chown -R {{ web_owner }}:{{ web_group }} /var/www-data/
+  notify: Reload nginx
+
+- name: Remove archive after extracting
+  ansible.builtin.file:
+    path: "/var/www-data/sausage-store-{{ artifact_version }}.tar.gz"
+    state: absent
