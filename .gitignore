@@ -10,3 +10,6 @@ terraform/.terraform.lock.hcl
 *.tfvars
 *.tfplan
 *.tfapply
+
+# Игнорировать файлы vault.yml во всех roles
+ansible/roles/**/vars/vault.yml
