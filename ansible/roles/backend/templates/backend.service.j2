@@ -4,11 +4,11 @@ After=network.target
 
 [Service]
 Description=Sausage Store Backend Service
-User=backend
-Group=backend
+User={{ backend_user }}
+Group={{ backend_group }}
 ExecStart=/usr/bin/java -jar /opt/sausage-store/bin/sausage-store.jar
-Environment=REPORT_PATH=/var/sausage-store/reports
-Environment=LOG_PATH=/var/sausage-store/logs
+Environment=REPORT_PATH={{ report_path }}
+Environment=LOG_PATH={{ log_path }}
 Restart=always
 
 [Install]

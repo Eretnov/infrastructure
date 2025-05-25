@@ -34,6 +34,17 @@
     url_password: "{{ nexus_pass }}"
     force_basic_auth: yes
 
+- name: Create directory for reports and logs
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ backend_user }}"
+    group: "{{ backend_group }}"
+    mode: '0755'
+  loop:
+    - "{{ report_path }}"
+    - "{{ log_path }}"  
+
 - name: Create systemd unit file for backend
   ansible.builtin.template:
     src: backend.service.j2

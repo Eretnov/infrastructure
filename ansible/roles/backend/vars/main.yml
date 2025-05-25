@@ -3,3 +3,5 @@ backend_user: backend
 backend_group: backend
 artifact_version: "1.0.2062495"
 repository: "std-040-31-backend-mixed"
+report_path: "/var/sausage-store/reports"
+log_path: "/var/sausage-store/logs"
